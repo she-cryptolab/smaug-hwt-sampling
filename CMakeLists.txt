@@ -15,6 +15,7 @@ endif()
 
 set(srcs
     ${PROJECT_SOURCE_DIR}/src/hwt-smaug.c
+    ${PROJECT_SOURCE_DIR}/src/hwt-ntru.c
     ${PROJECT_SOURCE_DIR}/src/rng.c
     ${PROJECT_SOURCE_DIR}/src/fips202.c
 )

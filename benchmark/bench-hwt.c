@@ -38,5 +38,16 @@ int main() {
     printf(" - time elapsed: %.8f ms\n\n",
            (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
 
+    /* NTRU */
+    srt = clock();
+    for (int i = 0; i < NTESTS; ++i) {
+        t[i] = cpucycles();
+        sample_fixed_type(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+    }
+    ed = clock();
+    print_results("NTRU hwt: ", t, NTESTS);
+    printf(" - time elapsed: %.8f ms\n\n",
+           (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
+
     return 0;
 }
