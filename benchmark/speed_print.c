@@ -32,7 +32,8 @@ static uint64_t average(uint64_t *t, size_t tlen) {
     return acc / tlen;
 }
 
-void print_results(const char *s, uint64_t *t, size_t tlen) {
+void print_results(unsigned long long *res, const char *s, uint64_t *t,
+                   size_t tlen) {
     size_t i;
     static uint64_t overhead = -1;
 
@@ -48,10 +49,11 @@ void print_results(const char *s, uint64_t *t, size_t tlen) {
     for (i = 0; i < tlen; ++i)
         t[i] = t[i + 1] - t[i] - overhead;
 
+    res[0] = (unsigned long long)median(t, tlen);
+    res[1] = (unsigned long long)average(t, tlen);
+
     printf("%s\n", s);
-    printf(" - median: %llu cycles/ticks\n",
-           (unsigned long long)median(t, tlen));
-    printf(" - average: %llu cycles/ticks\n",
-           (unsigned long long)average(t, tlen));
+    printf(" - median: %llu cycles/ticks\n", res[0]);
+    printf(" - average: %llu cycles/ticks\n", res[1]);
     //    printf("\n");
 }
