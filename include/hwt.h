@@ -14,4 +14,7 @@ void hwt(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
 void sample_fixed_type(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                        const size_t input_size, const uint16_t hmwt);
 
+void hwt_bike(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
+              const size_t input_size, const uint16_t hmwt);
+
 #endif // SMAUG_HWT_H

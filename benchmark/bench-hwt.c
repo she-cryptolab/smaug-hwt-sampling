@@ -62,5 +62,19 @@ int main() {
            (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
     overhead(res_smaug[1], res_ntru[1]);
 
+    /* BIKE */
+    srt = clock();
+    for (int i = 0; i < NTESTS; ++i) {
+        t[i] = cpucycles();
+        hwt_bike(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+    }
+    ed = clock();
+
+    unsigned long long res_bike[2] = {0};
+    print_results(res_bike, "BIKE hwt: ", t, NTESTS);
+    printf(" - time elapsed: %.8f ms\n",
+           (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
+    overhead(res_smaug[1], res_bike[1]);
+
     return 0;
 }
