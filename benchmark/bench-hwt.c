@@ -9,7 +9,7 @@
 #include "parameters.h"
 #include "rng.h"
 
-#define NTESTS 10000
+#define NTESTS 100000
 uint64_t t[NTESTS] = {0};
 
 void overhead(unsigned long long c1, unsigned long long c2) {

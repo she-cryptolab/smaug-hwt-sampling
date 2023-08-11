@@ -37,3 +37,4 @@ target_compile_options(smaug5-hwt PRIVATE ${C_FLAGS})
 
 
 add_subdirectory(benchmark)
+add_subdirectory(test)
