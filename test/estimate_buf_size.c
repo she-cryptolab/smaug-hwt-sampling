@@ -8,7 +8,8 @@
 int main() {
 
     printf("*** SMAUG MODE %d ***\n", SMAUG_MODE);
-    printf("- XOF output bytes: %d\n", (SHAKE256_RATE * sizeof(uint32_t)) * 2);
+    printf("- XOF output bytes: %d\n",
+           (int)(SHAKE256_RATE * sizeof(uint32_t)) * 2);
 
     uint32_t req_deg = (HS * 32) / 8;
     // uint32_t req_coef = (HS * 2) / 8;  // take coeff by (2-bit)
