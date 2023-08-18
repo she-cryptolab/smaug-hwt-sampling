@@ -2,22 +2,54 @@
 # %%
 import numpy as np
 import seaborn as sb
+import matplotlib.pyplot as plt
 
-with open("../build/bin/smaug1-deg-dist.txt", "r") as txt_file:
-    meta_line = txt_file.readline()
-    data_line = txt_file.readline()
+NSAMPLE = 20
 
-meta = [int(n) for n in meta_line.strip().split()]
-data = [int(n) for n in data_line.strip().split()]
 
-hwt = meta[0]; ntests = meta[1]; dimension = meta[2]
+def load_data(filepath):
+    with open(filepath, "r") as txt_file:
+        meta_line = txt_file.readline()
+        meta = [int(n) for n in meta_line.strip().split()]
+        for i in range(NSAMPLE):
+            data_line = txt_file.readline()
+            data[i] = [int(n) for n in data_line.strip().split()]
+    return meta, data
 
-average = (hwt*ntests)/dimension
-print(" - deg_dist len = " + str(len(data)))
-print(" - expected average = ", average)
 
-deg_idx = [int(i) for i in range(len(data))]
-sb.displot(data, x=deg_idx)
+def dist_plot(data, idx, bin_num, x_label="idx", title = "distribution", hist=False):
+    if(hist):
+        #sb.distplot(data, x= idx, kde = False)
+        sb.histplot(data, x = idx, color='skyblue', alpha=0.7, edgecolor='white'
+                   ,bins = bin_num)
+    else:
+        plt.scatter(range(len(data)), data, marker = 'o')
+    plt.xlabel(x_label)
+    plt.title(title)
+    plt.show()
 
-# %%
+
+def deg_dist_analysis(filepath, cnt = False):
+    data = [0 for i in range(NSAMPLE)]
+    (meta, data) = load_data(filepath)
+
+    hwt = meta[0]; ntests = meta[1]; dimension = meta[2]
+    average = (hwt*ntests)/dimension
+
+    deg_dist = [0 for i in range(len(data[0]))]
+    deg_idx = [int(i) for i in range(len(data[0]))]
+    for i in range(NSAMPLE):
+        deg_dist = np.array(deg_dist) + np.array(data[i])
+    deg_dist = deg_dist/NSAMPLE
+
+    if(cnt):
+        dist_plot(deg_dist, deg_idx, dimension, "poly section (rank)", "cnt distribution")
+    else:
+        dist_plot(deg_dist, deg_idx, dimension, "degree", "degree distribution")
+
+
+deg_dist_analysis("../build/bin/smaug1-deg-dist.txt")
+deg_dist_analysis("../build/bin/smaug1-deg-cnt.txt", cnt=True)
+
+
 # %%
