@@ -10,6 +10,10 @@
 #define NSAMPLE 20
 #define NTESTS 100000 // HS * NTEST < 2^64
 
+void (*hwt_deg_callback)(uint64_t *deg_dist, uint64_t *cnt_dist,
+                         const uint8_t *input, const size_t input_size,
+                         const uint16_t hmwt);
+
 // distribution of cnt for each coefficient in sx[LWE_N]
 void sx_degree_dist(uint64_t *deg_dist, FILE *file) {
     for (int i = 0; i < DIMENSION; ++i)
@@ -23,13 +27,23 @@ void sx_degree_cnt_dist(uint64_t *deg_cnt, FILE *file) {
     fprintf(file, "\n");
 }
 
-void test_hwt() {
-    char fname[25] = "";
-    sprintf(fname, "smaug%d-deg-dist.txt", SMAUG_MODE);
+void test_hwt(int original) {
+    char suf[10] = "";
+
+    if (original) {
+        hwt_deg_callback = (void *)hwt_degree;
+        strcat(suf, "origin");
+    } else {
+        hwt_deg_callback = (void *)hwt_bike_degree;
+        strcat(suf, "update");
+    }
+
+    char fname[30] = "";
+    sprintf(fname, "smaug%d-deg-dist-%s.txt", SMAUG_MODE, suf);
     FILE *fp_dist = fopen(fname, "w");
     fprintf(fp_dist, "%d %d %d\n", HS, NTESTS, DIMENSION);
 
-    sprintf(fname, "smaug%d-deg-cnt.txt", SMAUG_MODE);
+    sprintf(fname, "smaug%d-deg-cnt-%s.txt", SMAUG_MODE, suf);
     FILE *fp_cnt = fopen(fname, "w");
     fprintf(fp_cnt, "%d %d %d\n", HS, NTESTS, MODULE_RANK);
 
@@ -42,8 +56,7 @@ void test_hwt() {
             randombytes(seed, CRYPTO_BYTES);
             shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
 
-            hwt_bike_degree(dist_res, cnt_res, seed, CRYPTO_BYTES, HS);
-            // hwt_degree(dist_res, cnt_res, seed, CRYPTO_BYTES, HS);
+            hwt_deg_callback(dist_res, cnt_res, seed, CRYPTO_BYTES, HS);
         }
 
         sx_degree_dist(dist_res, fp_dist);
@@ -56,7 +69,8 @@ void test_hwt() {
 
 int main() {
     printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
-    test_hwt();
+    test_hwt(1); // SMAUG origin
+    test_hwt(0); // SMAUG update
 
     return 0;
 }

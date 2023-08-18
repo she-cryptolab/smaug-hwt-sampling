@@ -5,9 +5,10 @@ import seaborn as sb
 import matplotlib.pyplot as plt
 
 NSAMPLE = 20
-
+path = "../build/bin/"
 
 def load_data(filepath):
+    data = [0 for i in range(NSAMPLE)]
     with open(filepath, "r") as txt_file:
         meta_line = txt_file.readline()
         meta = [int(n) for n in meta_line.strip().split()]
@@ -48,8 +49,25 @@ def deg_dist_analysis(filepath, cnt = False):
         dist_plot(deg_dist, deg_idx, dimension, "degree", "degree distribution")
 
 
-deg_dist_analysis("../build/bin/smaug1-deg-dist.txt")
-deg_dist_analysis("../build/bin/smaug1-deg-cnt.txt", cnt=True)
+# SMAUG1
+deg_dist_analysis(path+"smaug1-deg-dist-update.txt")
+deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True)
 
+deg_dist_analysis(path+"smaug1-deg-dist-origin.txt")
+deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True)
+
+# SMAUG3
+deg_dist_analysis(path+"smaug3-deg-dist-update.txt")
+deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True)
+
+deg_dist_analysis(path+"smaug3-deg-dist-origin.txt")
+deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True)
+
+# SMAUG5
+deg_dist_analysis(path+"smaug5-deg-dist-update.txt")
+deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True)
+
+deg_dist_analysis(path+"smaug5-deg-dist-origin.txt")
+deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True)
 
 # %%
