@@ -5,7 +5,9 @@ import seaborn as sb
 import matplotlib.pyplot as plt
 
 NSAMPLE = 20
-path = "../build/bin/"
+# path = "../build/bin/"
+path = "./0818-sample-1/"
+
 
 def load_data(filepath):
     data = [0 for i in range(NSAMPLE)]
@@ -18,23 +20,25 @@ def load_data(filepath):
     return meta, data
 
 
-def dist_plot(data, idx, bin_num, x_label="idx", title = "distribution", hist=False):
+def dist_plot(data, idx, bin_num, x_label="idx", title="distribution", hist=False):
     if(hist):
-        #sb.distplot(data, x= idx, kde = False)
-        sb.histplot(data, x = idx, color='skyblue', alpha=0.7, edgecolor='white'
-                   ,bins = bin_num)
+        # sb.distplot(data, x= idx, kde = False)
+        sb.histplot(data, x=idx, color='skyblue', alpha=0.7,
+                    edgecolor='white', bins=bin_num)
     else:
-        plt.scatter(range(len(data)), data, marker = 'o')
+        plt.scatter(range(len(data)), data, marker='o')
     plt.xlabel(x_label)
     plt.title(title)
     plt.show()
 
 
-def deg_dist_analysis(filepath, cnt = False):
+def deg_dist_analysis(filepath, cnt=False):
     data = [0 for i in range(NSAMPLE)]
     (meta, data) = load_data(filepath)
 
-    hwt = meta[0]; ntests = meta[1]; dimension = meta[2]
+    hwt = meta[0]
+    ntests = meta[1]
+    dimension = meta[2]
     average = (hwt*ntests)/dimension
 
     deg_dist = [0 for i in range(len(data[0]))]
@@ -44,12 +48,13 @@ def deg_dist_analysis(filepath, cnt = False):
     deg_dist = deg_dist/NSAMPLE
 
     if(cnt):
-        dist_plot(deg_dist, deg_idx, dimension, "poly section (rank)", "cnt distribution")
+        dist_plot(deg_dist, deg_idx, dimension,
+                  "poly section (rank)", "cnt distribution")
     else:
-        dist_plot(deg_dist, deg_idx, dimension, "degree", "degree distribution")
+        dist_plot(deg_dist, deg_idx, dimension,
+                  "degree", "degree distribution")
 
-
-# SMAUG1
+ # SMAUG1
 deg_dist_analysis(path+"smaug1-deg-dist-update.txt")
 deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True)
 
