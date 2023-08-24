@@ -75,4 +75,53 @@ deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True)
 deg_dist_analysis(path+"smaug5-deg-dist-origin.txt")
 deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True)
 
+
+# %%
+# --------------- rand distribution --------------- #
+
+
+NSAMPLE = 1
+# path = "../build/bin/"
+path = "./0822-rand-1/"
+# path = "./0823-buf-1/"
+
+
+def rand_load_data(filepath):
+    with open(filepath, "r") as txt_file:
+        meta_line = txt_file.readline()
+        meta_line = txt_file.readline()
+        meta = [int(n) for n in meta_line.strip().split()]
+        data_line = txt_file.readline()
+        data = [int(n) for n in data_line.strip().split()]
+    return meta, data
+
+
+def rand_dist_plot(data, bin_num, x_label="idx", title="distribution", hist=False):
+    if(hist):
+        # sb.distplot(data, x= idx, kde = False)
+        sb.histplot(data, color='skyblue', alpha=0.7,
+                    edgecolor='white', bins=bin_num)
+    else:
+        plt.scatter(range(len(data)), data, marker='o')
+    plt.xlabel(x_label)
+    plt.title(title)
+    plt.show()
+
+
+def rand_dist_analysis(filepath):
+    (meta, data) = rand_load_data(filepath)
+    max = np.max(data)
+
+    print("max value = ", max)
+    print("max bit = ", np.log2(max))
+
+    print("")
+
+    rand_dist_plot(data, 400, hist=True)
+
+
+rand_dist_analysis(path+"out1.txt")
+rand_dist_analysis(path+"out3.txt")
+rand_dist_analysis(path+"out5.txt")
+
 # %%
