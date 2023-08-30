@@ -7,8 +7,8 @@
 #include "parameters.h"
 #include "rng.h"
 
-#define NSAMPLE 1   // 20
-#define NTESTS 1000 // 100000 // HS * NTEST < 2^64
+#define NSAMPLE 20  // 20
+#define NTESTS 5000 // 100000 // HS * NTEST < 2^64
 
 void (*hwt_callback)(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                      const size_t input_size, const uint16_t hmwt);
@@ -19,9 +19,10 @@ void (*hwt_deg_callback)(uint64_t *deg_dist, uint64_t *cnt_dist,
 
 void test_hwt(int original);
 void test_hwt_rand(int original);
+void test_hwt_i(int original);
 
 int main() {
-    printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
+    // printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
 
     /* degree dist check */
     // test_hwt(1); // SMAUG origin
@@ -29,7 +30,11 @@ int main() {
 
     /* rand dist check */
     // test_hwt_rand(1);
-    test_hwt_rand(0);
+    // test_hwt_rand(0);
+
+    /* degree dist for each i check*/
+    // test_hwt_i(1);
+    test_hwt_i(0);
 
     return 0;
 }
@@ -47,6 +52,7 @@ void sx_degree_cnt_dist(uint64_t *deg_cnt, FILE *file) {
     fprintf(file, "\n");
 }
 
+// Save degree and cnt_arry distributions to file
 void test_hwt(int original) {
     char suf[10] = "";
 
@@ -87,6 +93,7 @@ void test_hwt(int original) {
     fclose(fp_cnt);
 }
 
+// Print the rand buffer
 void test_hwt_rand(int original) {
     char suf[10] = "";
 
@@ -109,6 +116,33 @@ void test_hwt_rand(int original) {
             shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
 
             hwt_deg_callback(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        }
+    }
+}
+
+// Print degree distribution for each i (deg<i)
+void test_hwt_i(int original) {
+    if (original) {
+        hwt_callback = (void *)hwt_test;
+    } else {
+        hwt_callback = (void *)hwt_bike_test;
+    }
+
+    // for (int i = DIMENSION - HS; i < DIMENSION; ++i)
+    //     printf("%d ", i);
+    // printf("\n");
+
+    printf("%d %d\n", DIMENSION, HS);
+
+    for (int s = 0; s < NSAMPLE; ++s) {
+        for (int i = 0; i < NTESTS; ++i) {
+            uint8_t res[DIMENSION] = {0};
+            uint8_t cnt_arr[MODULE_RANK] = {0};
+            uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
+            randombytes(seed, CRYPTO_BYTES);
+            shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
+
+            hwt_callback(res, cnt_arr, seed, CRYPTO_BYTES, HS);
         }
     }
 }

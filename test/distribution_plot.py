@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 NSAMPLE = 20
 # path = "../build/bin/"
-path = "./0818-sample-1/"
+path = "./sample/0818-sample-1/"
 
 
 def load_data(filepath):
@@ -82,8 +82,8 @@ deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True)
 
 NSAMPLE = 1
 # path = "../build/bin/"
-path = "./0822-rand-1/"
-# path = "./0823-buf-1/"
+path = "./sample/0822-rand-1/"
+# path = "./sample/0823-buf-1/"
 
 
 def rand_load_data(filepath):
@@ -114,8 +114,6 @@ def rand_dist_analysis(filepath):
 
     print("max value = ", max)
     print("max bit = ", np.log2(max))
-
-    print("")
 
     rand_dist_plot(data, 400, hist=True)
 
