@@ -31,14 +31,11 @@ void hwt_bike(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
     for (i = DIMENSION - hmwt; i < DIMENSION; ++i) {
         uint64_t rand = (uint64_t)buf[pos] * i;
         deg = (uint32_t)(rand >> 32);
-        // printf("i = %d, rand = %10x, deg = %d\n", i, rand, deg);
 
         res[i] = res[deg];
         res[deg] =
             ((*((uint8_t *)buf + sizeof(uint32_t) * hmwt + pos)) & 0x02) - 1;
-        // printf("pos: %d, coef: %02x, res: %d\n", pos,
-        //        (*((uint8_t *)buf + sizeof(uint32_t) * hmwt + pos)),
-        //        res[deg]);
+
         pos++;
     }
 
@@ -48,6 +45,8 @@ void hwt_bike(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
         cnt_arr[cnt_arr_idx] += (res[i] & 0x01);
     }
 }
+
+/***************************** (cnt) FILE TEST ********************************/
 
 void hwt_bike_degree(uint64_t *deg_dist, uint64_t *cnt_dist,
                      const uint8_t *input, const size_t input_size,
@@ -88,7 +87,7 @@ void hwt_bike_degree(uint64_t *deg_dist, uint64_t *cnt_dist,
     }
 }
 
-/******************************** PRINT TEST **********************************/
+/**************************** (val) PRINT TEST ********************************/
 
 void hwt_bike_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
                           const uint8_t *input, const size_t input_size,
@@ -112,16 +111,23 @@ void hwt_bike_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
         uint64_t rand = (uint64_t)buf[pos] * i;
         // printf("%ld ", buf[pos]);
         // printf("%ld ", rand);
-        // deg = (uint32_t)(rand >> 32);
+        deg = (uint32_t)(rand >> 32);
 
-        // res[i] = res[deg];
-        // res[deg] =
-        //     ((*((uint8_t *)buf + sizeof(uint32_t) * hmwt + pos)) & 0x02) - 1;
+        if (res[deg] != 0) {
+            printf("%ld ", i);
+        } else {
+            printf("%ld ", deg);
+        }
+
+        res[i] = res[deg];
+        res[deg] =
+            ((*((uint8_t *)buf + sizeof(uint32_t) * hmwt + pos)) & 0x02) - 1;
 
         // deg_list[i] = deg_list[deg];
         // deg_list[deg] = 1;
         pos++;
     }
+    printf("\n");
 
     // size_t cnt_arr_idx = 0;
     // for (i = 0; i < DIMENSION; ++i) {

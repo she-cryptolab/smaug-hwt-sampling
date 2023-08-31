@@ -56,6 +56,8 @@ void hwt(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
     }
 }
 
+/***************************** (cnt) FILE TEST ********************************/
+
 void hwt_degree(uint64_t *deg_dist, uint64_t *cnt_dist, const uint8_t *input,
                 const size_t input_size, const uint16_t hmwt) {
 
@@ -108,7 +110,7 @@ void hwt_degree(uint64_t *deg_dist, uint64_t *cnt_dist, const uint8_t *input,
     }
 }
 
-/******************************** PRINT TEST **********************************/
+/**************************** (val) PRINT TEST ********************************/
 
 void hwt_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
                      const uint8_t *input, const size_t input_size,
@@ -145,16 +147,23 @@ void hwt_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
                 pos = 0;
             }
 
-            printf("%d ", buf[pos]);
+            // printf("%d ", buf[pos]);
             deg = buf[pos++] & deg_mask;
         } while (deg > i);
 
-        // res[i] = res[deg];
-        // res[deg] = ((buf[pos - 1] >> 14) & 0x02) - 1;
+        if (res[deg] != 0) {
+            printf("%ld ", i);
+        } else {
+            printf("%ld ", deg);
+        }
+
+        res[i] = res[deg];
+        res[deg] = ((buf[pos - 1] >> 14) & 0x02) - 1;
 
         // deg_list[i] = deg_list[deg];
         // deg_list[deg] = 1;
     }
+    printf("\n");
 
     // size_t cnt_arr_idx = 0;
     // for (i = 0; i < DIMENSION; ++i) {

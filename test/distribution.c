@@ -7,8 +7,8 @@
 #include "parameters.h"
 #include "rng.h"
 
-#define NSAMPLE 20  // 20
-#define NTESTS 5000 // 100000 // HS * NTEST < 2^64
+#define NSAMPLE 20   // 20
+#define NTESTS 10000 // 100000 // HS * NTEST < 2^64
 
 void (*hwt_callback)(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                      const size_t input_size, const uint16_t hmwt);
@@ -17,16 +17,21 @@ void (*hwt_deg_callback)(uint64_t *deg_dist, uint64_t *cnt_dist,
                          const uint8_t *input, const size_t input_size,
                          const uint16_t hmwt);
 
-void test_hwt(int original);
-void test_hwt_rand(int original);
-void test_hwt_i(int original);
+void test_hwt(int original);      // file output for degree
+void test_hwt_deg(int original);  // print
+void test_hwt_rand(int original); // print
+void test_hwt_i(int original);    // print
 
 int main() {
     // printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
 
-    /* degree dist check */
+    /* degree(count) dist check */
     // test_hwt(1); // SMAUG origin
     // test_hwt(0); // SMAUG update
+
+    /* degree dist check */
+    // test_hwt_deg(1);
+    test_hwt_deg(0);
 
     /* rand dist check */
     // test_hwt_rand(1);
@@ -34,7 +39,7 @@ int main() {
 
     /* degree dist for each i check*/
     // test_hwt_i(1);
-    test_hwt_i(0);
+    // test_hwt_i(0);
 
     return 0;
 }
@@ -52,7 +57,7 @@ void sx_degree_cnt_dist(uint64_t *deg_cnt, FILE *file) {
     fprintf(file, "\n");
 }
 
-// Save degree and cnt_arry distributions to file
+// (cnt) Save degree and cnt_arry distributions to file
 void test_hwt(int original) {
     char suf[10] = "";
 
@@ -93,7 +98,30 @@ void test_hwt(int original) {
     fclose(fp_cnt);
 }
 
-// Print the rand buffer
+// (val) Print the degree for each poly (HS for one line)
+void test_hwt_deg(int original) {
+    if (original) {
+        hwt_deg_callback = (void *)hwt_degree_test;
+    } else {
+        hwt_deg_callback = (void *)hwt_bike_degree_test;
+    }
+
+    printf("%d %d\n", HS, NTESTS);
+
+    for (int s = 0; s < NSAMPLE; ++s) {
+        for (int i = 0; i < NTESTS; ++i) {
+            uint64_t res[DIMENSION] = {0};
+            uint64_t cnt_arr[MODULE_RANK] = {0};
+            uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
+            randombytes(seed, CRYPTO_BYTES);
+            shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
+
+            hwt_deg_callback(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        }
+    }
+}
+
+// (val) Print the rand buffer
 void test_hwt_rand(int original) {
     char suf[10] = "";
 
@@ -120,7 +148,7 @@ void test_hwt_rand(int original) {
     }
 }
 
-// Print degree distribution for each i (deg<i)
+// (val) Print degree distribution for each i (deg<i)
 void test_hwt_i(int original) {
     if (original) {
         hwt_callback = (void *)hwt_test;
