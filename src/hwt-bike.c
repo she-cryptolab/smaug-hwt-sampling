@@ -29,7 +29,7 @@ void hwt_bike(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
         res[i] = 0;
 
     for (i = DIMENSION - hmwt; i < DIMENSION; ++i) {
-        uint64_t rand = (uint64_t)buf[pos] * i;
+        uint64_t rand = (uint64_t)buf[pos] * (i + 1);
         deg = (uint32_t)(rand >> 32);
 
         res[i] = res[deg];
@@ -67,7 +67,7 @@ void hwt_bike_degree(uint64_t *deg_dist, uint64_t *cnt_dist,
 
     uint32_t deg_list[DIMENSION] = {0}; // degree i selected -> list[i]=1
     for (i = DIMENSION - hmwt; i < DIMENSION; ++i) {
-        uint64_t rand = (uint64_t)buf[pos] * i;
+        uint64_t rand = (uint64_t)buf[pos] * (i + 1);
         deg = (uint32_t)(rand >> 32);
 
         res[i] = res[deg];
@@ -108,7 +108,7 @@ void hwt_bike_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
 
     uint32_t deg_list[DIMENSION] = {0}; // degree i selected -> list[i]=1
     for (i = DIMENSION - hmwt; i < DIMENSION; ++i) {
-        uint64_t rand = (uint64_t)buf[pos] * i;
+        uint64_t rand = (uint64_t)buf[pos] * (i + 1);
         // printf("%ld ", buf[pos]);
         // printf("%ld ", rand);
         deg = (uint32_t)(rand >> 32);
@@ -153,7 +153,7 @@ void hwt_bike_test(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
         res[i] = 0;
 
     for (i = DIMENSION - hmwt; i < DIMENSION; ++i) {
-        uint64_t rand = (uint64_t)buf[pos] * i;
+        uint64_t rand = (uint64_t)buf[pos] * (i + 1);
         deg = (uint32_t)(rand >> 32);
         printf("%ld ", deg);
 

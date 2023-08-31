@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 
 NSAMPLE = 20
 # path = "../build/bin/"
-# path = "./sample/0818-sample-cnt-1/"
-path = "./sample/0831-sample-cnt-2/"
+path = "./sample/cnt-deg-0831/"
 
 def load_data(filepath):
     data = [0 for i in range(NSAMPLE)]
@@ -36,7 +35,7 @@ def dist_plot(data, idx, bin_num, x_label="idx", title="distribution", hist=Fals
     plt.show()
 
 
-def deg_dist_analysis(filepath, cnt=False):
+def deg_dist_analysis(filepath, cnt=False, ver = ""):
     data = [0 for i in range(NSAMPLE)]
     (meta, data) = load_data(filepath)
 
@@ -53,76 +52,42 @@ def deg_dist_analysis(filepath, cnt=False):
 
     if(cnt):
         dist_plot(deg_dist, deg_idx, dimension,
-                  "poly section (rank)", "cnt distribution")
+                  "poly section (rank)", "cnt distribution"+ver)
     else:
         dist_plot(deg_dist, deg_idx, dimension,
-                  "degree", "degree distribution", hist=True)
+                  "degree", "degree distribution"+ver, hist=False)
 
- # SMAUG degree distribution
-deg_dist_analysis(path+"smaug1-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug1-deg-dist-origin.txt")
 
-deg_dist_analysis(path+"smaug3-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug3-deg-dist-origin.txt")
+# hwt sampling version
+v0 = " (origin)"
+v1 = " (update1)"
+v2 = " (update2)"
 
-deg_dist_analysis(path+"smaug5-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug5-deg-dist-origin.txt")
+# SMAUG degree distribution
+# deg_dist_analysis(path+"smaug1-deg-dist-update".txt", ver = v1)
+deg_dist_analysis(path+"smaug1-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug1-deg-dist-origin.txt", ver = v0)
+
+# deg_dist_analysis(path+"smaug3-deg-dist-update.txt", ver = v1)
+deg_dist_analysis(path+"smaug3-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug3-deg-dist-origin.txt", ver = v0)
+
+# deg_dist_analysis(path+"smaug5-deg-dist-update.txt", ver = v1)
+deg_dist_analysis(path+"smaug5-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug5-deg-dist-origin.txt", ver = v0)
 
 # SMAUG count array distribution
-# deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True)
-# deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True)
+# deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug1-deg-cnt-update-2.txt", cnt=True, ver = v2)
+# deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-# deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True)
-# deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True)
+# deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug3-deg-cnt-update-2.txt", cnt=True, ver = v2)
+# deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-# deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True)
-# deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True)
+# deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug5-deg-cnt-update-2.txt", cnt=True, ver = v2)
+# deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-
-# %%
-# --------------- rand distribution --------------- #
-
-
-NSAMPLE = 1
-# path = "../build/bin/"
-path = "./sample/0822-rand-1/"
-# path = "./sample/0823-buf-1/"
-
-
-def rand_load_data(filepath):
-    with open(filepath, "r") as txt_file:
-        meta_line = txt_file.readline()
-        meta_line = txt_file.readline()
-        meta = [int(n) for n in meta_line.strip().split()]
-        data_line = txt_file.readline()
-        data = [int(n) for n in data_line.strip().split()]
-    return meta, data
-
-
-def rand_dist_plot(data, bin_num, x_label="idx", title="distribution", hist=False):
-    if(hist):
-        # sb.distplot(data, x= idx, kde = False)
-        sb.histplot(data, color='skyblue', alpha=0.7,
-                    edgecolor='white', bins=bin_num)
-    else:
-        plt.scatter(range(len(data)), data, marker='o')
-    plt.xlabel(x_label)
-    plt.title(title)
-    plt.show()
-
-
-def rand_dist_analysis(filepath):
-    (meta, data) = rand_load_data(filepath)
-    max = np.max(data)
-
-    print("max value = ", max)
-    print("max bit = ", np.log2(max))
-
-    rand_dist_plot(data, 400, hist=True)
-
-
-rand_dist_analysis(path+"out1.txt")
-rand_dist_analysis(path+"out3.txt")
-rand_dist_analysis(path+"out5.txt")
 
 # %%

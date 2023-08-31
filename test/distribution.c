@@ -26,12 +26,12 @@ int main() {
     // printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
 
     /* degree(count) dist check */
-    // test_hwt(1); // SMAUG origin
-    // test_hwt(0); // SMAUG update
+    test_hwt(1); // SMAUG origin
+    test_hwt(0); // SMAUG update
 
     /* degree dist check */
     // test_hwt_deg(1);
-    test_hwt_deg(0);
+    // test_hwt_deg(0);
 
     /* rand dist check */
     // test_hwt_rand(1);
@@ -66,7 +66,7 @@ void test_hwt(int original) {
         strcat(suf, "origin");
     } else {
         hwt_deg_callback = (void *)hwt_bike_degree;
-        strcat(suf, "update");
+        strcat(suf, "update-2");
     }
 
     char fname[30] = "";

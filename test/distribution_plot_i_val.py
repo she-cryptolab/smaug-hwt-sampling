@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 
-path = "./sample/0824-deg-check-i-1/"
+path = "./sample/val-deg-i-0824/"
 
 
 def load_data(filepath):
