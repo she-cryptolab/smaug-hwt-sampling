@@ -1,13 +1,16 @@
 
 # %%
+# --------------- total degree distribution --------------- #
+# - after duplicate prevention
+# - input is the set of count of the each coeff (degree)
+
 import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 
 NSAMPLE = 20
 # path = "../build/bin/"
-path = "./0818-sample-1/"
-
+path = "./sample/cnt-deg-0831/"
 
 def load_data(filepath):
     data = [0 for i in range(NSAMPLE)]
@@ -32,14 +35,18 @@ def dist_plot(data, idx, bin_num, x_label="idx", title="distribution", hist=Fals
     plt.show()
 
 
-def deg_dist_analysis(filepath, cnt=False):
+def deg_dist_analysis(filepath, cnt=False, ver = ""):
     data = [0 for i in range(NSAMPLE)]
     (meta, data) = load_data(filepath)
 
     hwt = meta[0]
     ntests = meta[1]
     dimension = meta[2]
-    average = (hwt*ntests)/dimension
+
+    print("expectation: ", (hwt*ntests)/dimension)
+    print("mean       : ", np.mean(data))
+    print("std        : ", np.std(data))
+    print("min ~ max  : ", np.min(data), "~", np.max(data))
 
     deg_dist = [0 for i in range(len(data[0]))]
     deg_idx = [int(i) for i in range(len(data[0]))]
@@ -49,30 +56,35 @@ def deg_dist_analysis(filepath, cnt=False):
 
     if(cnt):
         dist_plot(deg_dist, deg_idx, dimension,
-                  "poly section (rank)", "cnt distribution")
+                  "poly section (rank)", "cnt distribution"+ver)
     else:
         dist_plot(deg_dist, deg_idx, dimension,
-                  "degree", "degree distribution")
+                  "degree", "degree distribution"+ver)
 
- # SMAUG1
-deg_dist_analysis(path+"smaug1-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True)
 
-deg_dist_analysis(path+"smaug1-deg-dist-origin.txt")
-deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True)
+# hwt sampling version
+v0 = " (origin)"
+v1 = " (update1)"
 
-# SMAUG3
-deg_dist_analysis(path+"smaug3-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True)
+# SMAUG degree distribution
+deg_dist_analysis(path+"smaug1-deg-dist-update".txt", ver = v1)
+deg_dist_analysis(path+"smaug1-deg-dist-origin.txt", ver = v0)
 
-deg_dist_analysis(path+"smaug3-deg-dist-origin.txt")
-deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True)
+deg_dist_analysis(path+"smaug3-deg-dist-update.txt", ver = v1)
+deg_dist_analysis(path+"smaug3-deg-dist-origin.txt", ver = v0)
 
-# SMAUG5
-deg_dist_analysis(path+"smaug5-deg-dist-update.txt")
-deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True)
+deg_dist_analysis(path+"smaug5-deg-dist-update.txt", ver = v1)
+deg_dist_analysis(path+"smaug5-deg-dist-origin.txt", ver = v0)
 
-deg_dist_analysis(path+"smaug5-deg-dist-origin.txt")
-deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True)
+# SMAUG count array distribution
+# deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True, ver = v0)
+
+# deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True, ver = v0)
+
+# deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True, ver = v1)
+# deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True, ver = v0)
+
 
 # %%

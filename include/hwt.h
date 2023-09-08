@@ -22,4 +22,12 @@ void hwt_bike_degree(uint64_t *deg_dist, uint64_t *cnt_dist,
                      const uint8_t *input, const size_t input_size,
                      const uint16_t hmwt);
 
+/**** PRINT TEST *****/
+void hwt_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
+                     const uint8_t *input, const size_t input_size,
+                     const uint16_t hmwt);
+void hwt_bike_degree_test(uint64_t *deg_dist, uint64_t *cnt_dist,
+                          const uint8_t *input, const size_t input_size,
+                          const uint16_t hmwt);
+
 #endif // SMAUG_HWT_H
