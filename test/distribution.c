@@ -56,7 +56,7 @@ void test_hwt(int original) {
         strcat(suf, "origin");
     } else {
         hwt_deg_callback = (void *)hwt_bike_degree;
-        strcat(suf, "update-2");
+        strcat(suf, "update");
     }
 
     char fname[30] = "";

@@ -65,32 +65,25 @@ def deg_dist_analysis(filepath, cnt=False, ver = ""):
 # hwt sampling version
 v0 = " (origin)"
 v1 = " (update1)"
-v2 = " (update2)"
 
 # SMAUG degree distribution
-# deg_dist_analysis(path+"smaug1-deg-dist-update".txt", ver = v1)
-deg_dist_analysis(path+"smaug1-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug1-deg-dist-update".txt", ver = v1)
 deg_dist_analysis(path+"smaug1-deg-dist-origin.txt", ver = v0)
 
-# deg_dist_analysis(path+"smaug3-deg-dist-update.txt", ver = v1)
-deg_dist_analysis(path+"smaug3-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug3-deg-dist-update.txt", ver = v1)
 deg_dist_analysis(path+"smaug3-deg-dist-origin.txt", ver = v0)
 
-# deg_dist_analysis(path+"smaug5-deg-dist-update.txt", ver = v1)
-deg_dist_analysis(path+"smaug5-deg-dist-update-2.txt", ver = v2)
+deg_dist_analysis(path+"smaug5-deg-dist-update.txt", ver = v1)
 deg_dist_analysis(path+"smaug5-deg-dist-origin.txt", ver = v0)
 
 # SMAUG count array distribution
 # deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True, ver = v1)
-# deg_dist_analysis(path+"smaug1-deg-cnt-update-2.txt", cnt=True, ver = v2)
 # deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True, ver = v0)
 
 # deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True, ver = v1)
-# deg_dist_analysis(path+"smaug3-deg-cnt-update-2.txt", cnt=True, ver = v2)
 # deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True, ver = v0)
 
 # deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True, ver = v1)
-# deg_dist_analysis(path+"smaug5-deg-cnt-update-2.txt", cnt=True, ver = v2)
 # deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True, ver = v0)
 
 
