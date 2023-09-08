@@ -42,7 +42,11 @@ def deg_dist_analysis(filepath, cnt=False, ver = ""):
     hwt = meta[0]
     ntests = meta[1]
     dimension = meta[2]
-    average = (hwt*ntests)/dimension
+
+    print("expectation: ", (hwt*ntests)/dimension)
+    print("mean       : ", np.mean(data))
+    print("std        : ", np.std(data))
+    print("min ~ max  : ", np.min(data), "~", np.max(data))
 
     deg_dist = [0 for i in range(len(data[0]))]
     deg_idx = [int(i) for i in range(len(data[0]))]
@@ -55,7 +59,7 @@ def deg_dist_analysis(filepath, cnt=False, ver = ""):
                   "poly section (rank)", "cnt distribution"+ver)
     else:
         dist_plot(deg_dist, deg_idx, dimension,
-                  "degree", "degree distribution"+ver, hist=False)
+                  "degree", "degree distribution"+ver)
 
 
 # hwt sampling version

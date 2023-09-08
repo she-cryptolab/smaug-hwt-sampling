@@ -7,8 +7,8 @@
 #include "parameters.h"
 #include "rng.h"
 
-#define NSAMPLE 20   // 20
-#define NTESTS 10000 // 100000 // HS * NTEST < 2^64
+#define NSAMPLE 20
+#define NTESTS 100000 // HS * NTEST < 2^64
 
 void (*hwt_callback)(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                      const size_t input_size, const uint16_t hmwt);
@@ -17,10 +17,8 @@ void (*hwt_deg_callback)(uint64_t *deg_dist, uint64_t *cnt_dist,
                          const uint8_t *input, const size_t input_size,
                          const uint16_t hmwt);
 
-void test_hwt(int original);      // file output for degree
-void test_hwt_deg(int original);  // print
-void test_hwt_rand(int original); // print
-void test_hwt_i(int original);    // print
+void test_hwt(int original);     // file output for degree
+void test_hwt_deg(int original); // print
 
 int main() {
     // printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
@@ -32,14 +30,6 @@ int main() {
     /* degree dist check */
     // test_hwt_deg(1);
     // test_hwt_deg(0);
-
-    /* rand dist check */
-    // test_hwt_rand(1);
-    // test_hwt_rand(0);
-
-    /* degree dist for each i check*/
-    // test_hwt_i(1);
-    // test_hwt_i(0);
 
     return 0;
 }
