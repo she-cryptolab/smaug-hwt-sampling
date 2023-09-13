@@ -80,7 +80,7 @@ int parse_coeff_in_one_seed(int hwt, int d) {
     int unit_byte = unit / 8;
 
     int req1 = req_unit(unit, hwt, d + coeff_bit);
-    printf("   - required uint%d_t =\t%d\t(%d-byte)\n", unit, req1,
+    printf("   - required unit      =\t%d\t(%d-byte)\n", req1,
            req1 * unit_byte);
 
     int req2 = req_xof_block(req1 * unit_byte);
@@ -101,11 +101,11 @@ void parse_coeff_in_diff_seed(int req[], int hwt, int d) {
     int deg_unit_byte = deg_unit / 8;
 
     req[0] = req_unit(coeff_unit, hwt, coeff_bit);
-    printf("   - required coeff uint%d_t  =\t%d\t(%d-byte)\n", coeff_unit,
-           req[0], req[0] * coeff_unit_byte);
+    printf("   - required coeff unit =\t%d\t(%d-byte)\n", req[0],
+           req[0] * coeff_unit_byte);
 
     req[1] = req_unit(deg_unit, hwt, d);
-    printf("   - required deg uint%d_t   =\t%d\t(%d-byte)\n", deg_unit, req[1],
+    printf("   - required deg unit   =\t%d\t(%d-byte)\n", req[1],
            req[1] * deg_unit_byte);
 
     int req2 = req_xof_block(req[0] * coeff_unit_byte + req[1] * deg_unit_byte);
