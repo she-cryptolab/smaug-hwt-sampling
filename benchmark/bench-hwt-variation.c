@@ -19,6 +19,42 @@ void overhead(unsigned long long c1, unsigned long long c2) {
     printf(" - cycle overhead: %.2f (%d%%)\n\n", diff_c, (int)(diff_c * 100));
 }
 
+void xof_bench() {
+    uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
+    randombytes(seed, CRYPTO_BYTES);
+    shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
+
+    clock_t srt, ed;
+
+    /* XOF 8-times */
+    srt = clock();
+    for (int i = 0; i < NTESTS; ++i) {
+        t[i] = cpucycles();
+        xof_32(seed, CRYPTO_BYTES);
+    }
+
+    unsigned long long res_0[2] = {0};
+    ed = clock();
+    print_results(res_0, "xof 8-times: ", t, NTESTS);
+    printf(" - time elapsed: %.8f ms\n",
+           (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
+    overhead(res_0[1], res_0[1]);
+
+    /* XOF 8-times */
+    srt = clock();
+    for (int i = 0; i < NTESTS; ++i) {
+        t[i] = cpucycles();
+        xof_20(seed, CRYPTO_BYTES);
+    }
+
+    unsigned long long res_1[2] = {0};
+    ed = clock();
+    print_results(res_1, "xof optimized: ", t, NTESTS);
+    printf(" - time elapsed: %.8f ms\n",
+           (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
+    overhead(res_0[1], res_1[1]);
+}
+
 int main() {
     uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
     randombytes(seed, CRYPTO_BYTES);
@@ -35,7 +71,7 @@ int main() {
     latency = clock() - latency;
 
     printf("******** SMAUG%d hwt benchmark ********\n", SMAUG_MODE);
-    // xof_bench();
+    xof_bench();
 
     /* SMAUG original */
     srt = clock();

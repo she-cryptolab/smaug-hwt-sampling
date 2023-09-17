@@ -23,6 +23,9 @@ void hwt_bike_degree(uint64_t *deg_dist, uint64_t *cnt_dist,
                      const uint16_t hmwt);
 
 /**** VARIATION TEST *****/
+void xof_32(const uint8_t *input, const size_t input_size);
+void xof_20(const uint8_t *input, const size_t input_size);
+
 void hwt_32_block(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                   const size_t input_size, const uint16_t hmwt);
 

@@ -27,6 +27,26 @@
 #define HS_XOF_32 6
 #endif
 
+/*************************** XOF variation *******************************/
+
+void xof_32(const uint8_t *input, const size_t input_size) {
+    uint32_t buf[SHAKE256_RATE * 2] = {0};
+
+    keccak_state state;
+    shake256_init(&state);
+    shake256_absorb_once(&state, input, input_size);
+    shake256_squeezeblocks((uint8_t *)buf, 8, &state);
+}
+
+void xof_20(const uint8_t *input, const size_t input_size) {
+    uint32_t buf[SHAKE256_RATE * 2] = {0};
+
+    keccak_state state;
+    shake256_init(&state);
+    shake256_absorb_once(&state, input, input_size);
+    shake256_squeezeblocks((uint8_t *)buf, HS_XOF, &state);
+}
+
 /*************************** packing variation *******************************/
 void hwt_32_block(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
                   const size_t input_size, const uint16_t hmwt) {
