@@ -91,8 +91,8 @@ int main() {
     srt = clock();
     for (int i = 0; i < NTESTS; ++i) {
         t[i] = cpucycles();
-        // hwt_bike(res, cnt_arr, seed, CRYPTO_BYTES, HS);
-        hwt_32_block(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        hwt_bike(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        // hwt_32_block(res, cnt_arr, seed, CRYPTO_BYTES, HS);
     }
 
     unsigned long long res_0[2] = {0};

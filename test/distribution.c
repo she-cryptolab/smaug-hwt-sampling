@@ -7,7 +7,7 @@
 #include "parameters.h"
 #include "rng.h"
 
-#define NSAMPLE 20
+#define NSAMPLE 40
 #define NTESTS 100000 // HS * NTEST < 2^64
 
 void (*hwt_callback)(uint8_t *res, uint8_t *cnt_arr, const uint8_t *input,
@@ -24,8 +24,9 @@ int main() {
     // printf("** HS = %d, NSAMPLE:%d NTESTS: %d\n", HS, NSAMPLE, NTESTS);
 
     /* degree(count) dist check */
-    test_hwt(1); // SMAUG origin
-    test_hwt(0); // SMAUG update
+    test_hwt(0); // SMAUG origin
+    test_hwt(1); // SMAUG update (32-bit)
+    test_hwt(2); // SMAUG update (20-bit)
 
     /* degree dist check */
     // test_hwt_deg(1);
@@ -51,12 +52,18 @@ void sx_degree_cnt_dist(uint64_t *deg_cnt, FILE *file) {
 void test_hwt(int original) {
     char suf[10] = "";
 
-    if (original) {
+    if (original == 0) {
         hwt_deg_callback = (void *)hwt_degree;
         strcat(suf, "origin");
-    } else {
+    } else if (original == 1) {
         hwt_deg_callback = (void *)hwt_bike_degree;
-        strcat(suf, "update");
+        strcat(suf, "update-32");
+    } else if (original == 2) {
+        hwt_deg_callback = (void *)hwt_22_degree;
+        strcat(suf, "update-20");
+    } else {
+        printf("invalid input - choose variation: [0]origin, [1]32-bit, "
+               "[2]20-bit\n");
     }
 
     char fname[30] = "";
@@ -88,25 +95,25 @@ void test_hwt(int original) {
     fclose(fp_cnt);
 }
 
-// (val) Print the degree for each poly (HS for one line)
-void test_hwt_deg(int original) {
-    if (original) {
-        hwt_deg_callback = (void *)hwt_degree_test;
-    } else {
-        hwt_deg_callback = (void *)hwt_bike_degree_test;
-    }
+// // (val) Print the degree for each poly (HS for one line)
+// void test_hwt_deg(int original) {
+//     if (original) {
+//         hwt_deg_callback = (void *)hwt_degree_test;
+//     } else {
+//         hwt_deg_callback = (void *)hwt_bike_degree_test;
+//     }
 
-    printf("%d %d\n", HS, NTESTS);
+//     printf("%d %d\n", HS, NTESTS);
 
-    for (int s = 0; s < NSAMPLE; ++s) {
-        for (int i = 0; i < NTESTS; ++i) {
-            uint64_t res[DIMENSION] = {0};
-            uint64_t cnt_arr[MODULE_RANK] = {0};
-            uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
-            randombytes(seed, CRYPTO_BYTES);
-            shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
+//     for (int s = 0; s < NSAMPLE; ++s) {
+//         for (int i = 0; i < NTESTS; ++i) {
+//             uint64_t res[DIMENSION] = {0};
+//             uint64_t cnt_arr[MODULE_RANK] = {0};
+//             uint8_t seed[CRYPTO_BYTES + PKSEED_BYTES] = {0};
+//             randombytes(seed, CRYPTO_BYTES);
+//             shake128(seed, CRYPTO_BYTES + PKSEED_BYTES, seed, CRYPTO_BYTES);
 
-            hwt_deg_callback(res, cnt_arr, seed, CRYPTO_BYTES, HS);
-        }
-    }
-}
+//             hwt_deg_callback(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+//         }
+//     }
+// }

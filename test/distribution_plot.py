@@ -10,7 +10,9 @@ import matplotlib.pyplot as plt
 
 NSAMPLE = 20
 # path = "../build/bin/"
-path = "./sample/cnt-deg-0831/"
+# path = "./sample/cnt-deg-0918-1/"
+path = "./sample/cnt-deg-0918-2/"
+
 
 def load_data(filepath):
     data = [0 for i in range(NSAMPLE)]
@@ -64,26 +66,35 @@ def deg_dist_analysis(filepath, cnt=False, ver = ""):
 
 # hwt sampling version
 v0 = " (origin)"
-v1 = " (update1)"
+v1 = " (update 32-bit)"
+v2 = " (update 20-bit)"
 
 # SMAUG degree distribution
-deg_dist_analysis(path+"smaug1-deg-dist-update".txt", ver = v1)
-deg_dist_analysis(path+"smaug1-deg-dist-origin.txt", ver = v0)
+deg_dist_analysis(path+"smaug1-deg-dist-origin.txt", ver=v0)
+deg_dist_analysis(path+"smaug1-deg-dist-update-32.txt", ver=v1)
+deg_dist_analysis(path+"smaug1-deg-dist-update-20.txt", ver=v2)
 
-deg_dist_analysis(path+"smaug3-deg-dist-update.txt", ver = v1)
-deg_dist_analysis(path+"smaug3-deg-dist-origin.txt", ver = v0)
+deg_dist_analysis(path+"smaug3-deg-dist-origin.txt", ver=v0)
+deg_dist_analysis(path+"smaug3-deg-dist-update-32.txt", ver=v1)
+deg_dist_analysis(path+"smaug3-deg-dist-update-20.txt", ver=v2)
 
-deg_dist_analysis(path+"smaug5-deg-dist-update.txt", ver = v1)
-deg_dist_analysis(path+"smaug5-deg-dist-origin.txt", ver = v0)
+deg_dist_analysis(path+"smaug5-deg-dist-origin.txt", ver=v0)
+deg_dist_analysis(path+"smaug5-deg-dist-update-32.txt", ver=v1)
+deg_dist_analysis(path+"smaug5-deg-dist-update-20.txt", ver=v2)
 
-# SMAUG count array distribution
-# deg_dist_analysis(path+"smaug1-deg-cnt-update.txt", cnt=True, ver = v1)
+# # SMAUG count array distribution
+# deg_dist_analysis(path+"smaug1-deg-cnt-update-20.txt", cnt=True, ver=v2)
+# deg_dist_analysis(path+"smaug1-deg-cnt-update-32.txt", cnt=True, ver = v1)
 # deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-# deg_dist_analysis(path+"smaug3-deg-cnt-update.txt", cnt=True, ver = v1)
+
+# deg_dist_analysis(path+"smaug3-deg-cnt-update-20.txt", cnt=True, ver=v2)
+# deg_dist_analysis(path+"smaug3-deg-cnt-update-32.txt", cnt=True, ver = v1)
 # deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-# deg_dist_analysis(path+"smaug5-deg-cnt-update.txt", cnt=True, ver = v1)
+
+# deg_dist_analysis(path+"smaug5-deg-cnt-update-20.txt", cnt=True, ver=v2)
+# deg_dist_analysis(path+"smaug5-deg-cnt-update-32.txt", cnt=True, ver = v1)
 # deg_dist_analysis(path+"smaug5-deg-cnt-origin.txt", cnt=True, ver = v0)
 
 
