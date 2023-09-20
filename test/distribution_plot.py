@@ -87,11 +87,9 @@ deg_dist_analysis(path+"smaug5-deg-dist-update-20.txt", ver=v2)
 # deg_dist_analysis(path+"smaug1-deg-cnt-update-32.txt", cnt=True, ver = v1)
 # deg_dist_analysis(path+"smaug1-deg-cnt-origin.txt", cnt=True, ver = v0)
 
-
 # deg_dist_analysis(path+"smaug3-deg-cnt-update-20.txt", cnt=True, ver=v2)
 # deg_dist_analysis(path+"smaug3-deg-cnt-update-32.txt", cnt=True, ver = v1)
 # deg_dist_analysis(path+"smaug3-deg-cnt-origin.txt", cnt=True, ver = v0)
-
 
 # deg_dist_analysis(path+"smaug5-deg-cnt-update-20.txt", cnt=True, ver=v2)
 # deg_dist_analysis(path+"smaug5-deg-cnt-update-32.txt", cnt=True, ver = v1)

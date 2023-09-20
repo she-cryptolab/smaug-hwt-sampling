@@ -71,7 +71,7 @@ int main() {
     latency = clock() - latency;
 
     printf("******** SMAUG%d hwt benchmark ********\n", SMAUG_MODE);
-    xof_bench();
+    // xof_bench();
 
     /* SMAUG original */
     srt = clock();
@@ -91,8 +91,8 @@ int main() {
     srt = clock();
     for (int i = 0; i < NTESTS; ++i) {
         t[i] = cpucycles();
-        hwt_bike(res, cnt_arr, seed, CRYPTO_BYTES, HS);
-        // hwt_32_block(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        // hwt_bike(res, cnt_arr, seed, CRYPTO_BYTES, HS);
+        hwt_32_block(res, cnt_arr, seed, CRYPTO_BYTES, HS);
     }
 
     unsigned long long res_0[2] = {0};
@@ -123,12 +123,12 @@ int main() {
         hwt_21_block(res, cnt_arr, seed, CRYPTO_BYTES, HS);
     }
 
-    unsigned long long res_2[2] = {0};
-    ed = clock();
-    print_results(res_2, "hwt-21-block: ", t, NTESTS);
-    printf(" - time elapsed: %.8f ms\n",
-           (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
-    overhead(res_smaug[1], res_2[1]);
+    // unsigned long long res_2[2] = {0};
+    // ed = clock();
+    // print_results(res_2, "hwt-21-block: ", t, NTESTS);
+    // printf(" - time elapsed: %.8f ms\n",
+    //        (double)(ed - srt) * 1000 / CLOCKS_PER_SEC / NTESTS);
+    // overhead(res_smaug[1], res_2[1]);
 
     return 0;
 }

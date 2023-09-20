@@ -24,13 +24,21 @@ int parse_coeff_in_one_seed(int hwt, int d);
 void parse_coeff_in_diff_seed(int req[], int hwt, int d);
 
 int main() {
-    required_size(SMAUG1_HS, 20);
-    required_size(SMAUG3_HS, 20);
-    required_size(SMAUG5_HS, 20);
+    // required_size(SMAUG1_HS, 20);
+    // required_size(SMAUG3_HS, 20);
+    // required_size(SMAUG5_HS, 20);
 
-    required_size(SMAUG1_HS, 32);
-    required_size(SMAUG3_HS, 32);
-    required_size(SMAUG5_HS, 32);
+    // required_size(SMAUG1_HS, 32);
+    // required_size(SMAUG3_HS, 32);
+    // required_size(SMAUG5_HS, 32);
+
+    required_size(SMAUG1_HR, 20);
+    required_size(SMAUG3_HR, 20);
+    required_size(SMAUG5_HR, 20);
+
+    required_size(SMAUG1_HR, 32);
+    required_size(SMAUG3_HR, 32);
+    required_size(SMAUG5_HR, 32);
 
     return 0;
 }
